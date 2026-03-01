@@ -2,6 +2,13 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  SignUp,
+} from "@clerk/nextjs";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -19,16 +26,29 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          {/* Keep ONE stable container */}
+          <main className="flex min-h-screen items-center justify-center">
+            
+            <SignedOut>
+              <SignUp />
+            </SignedOut>
+
+            <SignedIn>
+              {children}
+            </SignedIn>
+
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
