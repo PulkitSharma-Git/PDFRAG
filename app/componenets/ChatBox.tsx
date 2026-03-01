@@ -2,7 +2,11 @@
 import React, { useState } from "react";
 import { Send } from "lucide-react";
 
-export default function ChatBox() {
+interface ChatBoxProps {
+    filename: string | null;
+}
+
+export default function ChatBox({ filename }: ChatBoxProps) {
     const [messages, setMessages] = useState<{ role: 'user' | 'ai', text: string }[]>([]);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +25,7 @@ export default function ChatBox() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ question: userMessage })
+                body: JSON.stringify({ question: userMessage, filename: filename })
             });
 
             if (!res.ok) throw new Error("Failed to fetch response");

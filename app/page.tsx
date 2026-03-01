@@ -1,7 +1,11 @@
+"use client";
+import { useState } from "react";
 import FileUploadComponent from "./componenets/FileUpload";
 import ChatBox from "./componenets/ChatBox";
 
 export default function Home() {
+  const [uploadedFilename, setUploadedFilename] = useState<string | null>(null);
+
   return (
     <div>
       <div className="min-h-screen w-screen flex">
@@ -15,13 +19,16 @@ export default function Home() {
             <h2 className="text-3xl font-extrabold text-amber-900 tracking-tight text-center">
               Gemini PDF RAG
             </h2>
-            <FileUploadComponent />
+            <FileUploadComponent onFileUpload={setUploadedFilename} />
+            {uploadedFilename && (
+               <p className="text-sm font-semibold text-amber-800">Active PDF: {uploadedFilename}</p>
+            )}
           </div>
         </div>
 
         {/* Chat Section - Right Side */}
         <div className="w-[70vw] min-h-screen bg-slate-50 border-l border-amber-200 shadow-inner z-10">
-          <ChatBox />
+          <ChatBox filename={uploadedFilename} />
         </div>
       </div>
     </div>
