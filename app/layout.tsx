@@ -30,11 +30,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ClerkProvider>
           {/* Keep ONE stable container */}
           <main className="flex min-h-screen items-center justify-center">
             
@@ -47,8 +47,8 @@ export default function RootLayout({
             </SignedIn>
 
           </main>
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
