@@ -11,7 +11,7 @@
   "dependencies": {
     "@clerk/nextjs": "^6.39.0",
     "lucide-react": "^0.511.0",
-    "next": "15.2.0-canary.72",
+    "next": "15.5.12",
     "react": "19.0.3",
     "react-dom": "19.0.3"
   },
