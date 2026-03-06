@@ -27,7 +27,7 @@ export default function ChatBox({ filename, totalDocs = 0 }: ChatBoxProps) {
     setIsLoading(true);
     try {
       const res = await fetch(
-        process.env.NEXT_PUBLIC_SERVER_URL + "/query" || "http://localhost:8000/query",
+          (process.env.NEXT_PUBLIC_SERVER_URL ?? "http://localhost:8000") + "/query",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
