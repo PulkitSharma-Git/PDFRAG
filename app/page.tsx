@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import FileUploadComponent from "./componenets/FileUpload";
 import ChatBox from "./componenets/ChatBox";
 import { FileText, Layers, X } from "lucide-react";
@@ -7,24 +7,16 @@ import { FileText, Layers, X } from "lucide-react";
 export default function Home() {
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
   const [selectedFilename, setSelectedFilename] = useState<string | null>(null);
-  const [mouse, setMouse] = useState({ x: -999, y: -999 });
   const [cardMouse, setCardMouse] = useState({ x: 0, y: 0 });
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // Global mouse tracking
-  useEffect(() => {
-    const move = (e: MouseEvent) => {
-      setMouse({ x: e.clientX, y: e.clientY });
-
-      // Card-relative mouse
-      if (panelRef.current) {
-        const rect = panelRef.current.getBoundingClientRect();
-        setCardMouse({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-      }
-    };
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
+  // Card-relative mouse tracking for panel inner spotlight
+  const handlePanelMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (panelRef.current) {
+      const rect = panelRef.current.getBoundingClientRect();
+      setCardMouse({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    }
+  };
 
   const handleFileUpload = (filename: string) => {
     setUploadedFiles((prev) => {
@@ -46,74 +38,17 @@ export default function Home() {
         minHeight: "100vh",
         width: "100vw",
         display: "flex",
-        background: "#0d0800",
+        background: "transparent",
         fontFamily: "var(--font-outfit), apple-system, sans-serif",
         cursor: "none",
         overflow: "hidden",
         position: "relative",
       }}
     >
-      {/* ── Custom cursor ── */}
-      <div
-        style={{
-          position: "fixed",
-          width: 8,
-          height: 8,
-          borderRadius: "50%",
-          background: "rgba(255,200,100,0.92)",
-          left: mouse.x,
-          top: mouse.y,
-          transform: "translate(-50%,-50%)",
-          pointerEvents: "none",
-          zIndex: 9999,
-          mixBlendMode: "difference",
-        }}
-      />
-
-      {/* ── Global spotlight ── */}
-      <div
-        style={{
-          position: "fixed",
-          width: 700,
-          height: 700,
-          borderRadius: "50%",
-          left: mouse.x,
-          top: mouse.y,
-          transform: "translate(-50%,-50%)",
-          background:
-            "radial-gradient(circle at center, rgba(255,160,40,0.055) 0%, rgba(200,80,10,0.025) 30%, transparent 65%)",
-          filter: "blur(1px)",
-          pointerEvents: "none",
-          zIndex: 1,
-          transition: "left 0.07s ease-out, top 0.07s ease-out",
-        }}
-      />
-
-      {/* ── Ambient orbs ── */}
-      <div style={{ position:"fixed", width:350, height:350, borderRadius:"50%", top:"5%", left:"5%", background:"radial-gradient(circle, rgba(255,120,30,0.11), transparent 70%)", filter:"blur(70px)", pointerEvents:"none", zIndex:0, animation:"drift1 11s ease-in-out infinite" }} />
-      <div style={{ position:"fixed", width:250, height:250, borderRadius:"50%", bottom:"10%", right:"10%", background:"radial-gradient(circle, rgba(255,190,60,0.07), transparent 70%)", filter:"blur(70px)", pointerEvents:"none", zIndex:0, animation:"drift2 14s ease-in-out infinite" }} />
-      <div style={{ position:"fixed", width:180, height:180, borderRadius:"50%", bottom:"25%", left:"8%", background:"radial-gradient(circle, rgba(220,80,0,0.08), transparent 70%)", filter:"blur(70px)", pointerEvents:"none", zIndex:0, animation:"drift1 18s ease-in-out infinite reverse" }} />
-
-      {/* ── Hairline rules ── */}
-      <div style={{ position:"fixed", left:0, right:0, top:"28%", height:1, background:"linear-gradient(90deg, transparent, rgba(255,160,40,0.05) 20%, rgba(255,160,40,0.05) 80%, transparent)", pointerEvents:"none", zIndex:1 }} />
-      <div style={{ position:"fixed", left:0, right:0, bottom:"28%", height:1, background:"linear-gradient(90deg, transparent, rgba(255,160,40,0.05) 20%, rgba(255,160,40,0.05) 80%, transparent)", pointerEvents:"none", zIndex:1 }} />
-
-      {/* ── Film grain ── */}
-      <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 2,
-          pointerEvents: "none",
-          opacity: 0.04,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          backgroundSize: "180px 180px",
-        }}
-      />
-
       {/* ── Left Panel ── */}
       <div
         ref={panelRef}
+        onMouseMove={handlePanelMouseMove}
         style={{
           width: "30vw",
           minHeight: "100vh",
@@ -282,19 +217,6 @@ export default function Home() {
         <div style={{ position:"absolute", top:0, left:0, right:0, height:1, background:"linear-gradient(90deg, transparent, rgba(255,160,40,0.04) 30%, rgba(255,160,40,0.04) 70%, transparent)", pointerEvents:"none" }} />
         <ChatBox filename={selectedFilename} totalDocs={uploadedFiles.length} />
       </div>
-
-      {/* ── Keyframes ── */}
-      <style>{`
-        @keyframes drift1 {
-          0%,100% { transform: translate(0,0); }
-          40%      { transform: translate(14px,-22px); }
-          70%      { transform: translate(-8px,10px); }
-        }
-        @keyframes drift2 {
-          0%,100% { transform: translate(0,0); }
-          50%      { transform: translate(-20px,-18px); }
-        }
-      `}</style>
     </div>
   );
 }

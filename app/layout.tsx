@@ -39,100 +39,18 @@ export default function RootLayout({
           cursor: "none",
         }}
       >
-        {/* ── Ambient orbs ─────────────────────────────── */}
-
-        {/* Orb 1 — amber, top-left */}
-        <div
-          style={{
-            position: "fixed",
-            width: 350,
-            height: 350,
-            borderRadius: "50%",
-            top: "5%",
-            left: "5%",
-            background:
-              "radial-gradient(circle, rgba(255,120,30,0.11), transparent 70%)",
-            filter: "blur(70px)",
-            pointerEvents: "none",
-            zIndex: 0,
-            animation: "drift1 11s ease-in-out infinite",
-          }}
-        />
-
-        {/* Orb 2 — gold, bottom-right */}
-        <div
-          style={{
-            position: "fixed",
-            width: 250,
-            height: 250,
-            borderRadius: "50%",
-            bottom: "10%",
-            right: "10%",
-            background:
-              "radial-gradient(circle, rgba(255,190,60,0.07), transparent 70%)",
-            filter: "blur(70px)",
-            pointerEvents: "none",
-            zIndex: 0,
-            animation: "drift2 14s ease-in-out infinite",
-          }}
-        />
-
-        {/* Orb 3 — deep orange, bottom-left */}
-        <div
-          style={{
-            position: "fixed",
-            width: 180,
-            height: 180,
-            borderRadius: "50%",
-            bottom: "25%",
-            left: "8%",
-            background:
-              "radial-gradient(circle, rgba(220,80,0,0.08), transparent 70%)",
-            filter: "blur(70px)",
-            pointerEvents: "none",
-            zIndex: 0,
-            animation: "drift1 18s ease-in-out infinite reverse",
-          }}
-        />
-
-        {/* ── Hairline rules ────────────────────────────── */}
-        <div
-          style={{
-            position: "fixed",
-            left: 0,
-            right: 0,
-            top: "28%",
-            height: 1,
-            background:
-              "linear-gradient(90deg, transparent, rgba(255,160,40,0.05) 20%, rgba(255,160,40,0.05) 80%, transparent)",
-            pointerEvents: "none",
-            zIndex: 1,
-          }}
-        />
-        <div
-          style={{
-            position: "fixed",
-            left: 0,
-            right: 0,
-            bottom: "28%",
-            height: 1,
-            background:
-              "linear-gradient(90deg, transparent, rgba(255,160,40,0.05) 20%, rgba(255,160,40,0.05) 80%, transparent)",
-            pointerEvents: "none",
-            zIndex: 1,
-          }}
-        />
-
-        {/* ── Film grain overlay ────────────────────────── */}
+        {/* ── Single ambient wallpaper glow ─────────────── */}
         <div
           style={{
             position: "fixed",
             inset: 0,
-            zIndex: 2,
+            background: `
+              radial-gradient(ellipse 80% 60% at 20% 50%, rgba(200,90,10,0.13) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 70% at 80% 40%, rgba(255,160,40,0.08) 0%, transparent 55%),
+              radial-gradient(ellipse 100% 80% at 50% 100%, rgba(160,50,0,0.08) 0%, transparent 50%)
+            `,
             pointerEvents: "none",
-            opacity: 0.04,
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-            backgroundSize: "180px 180px",
+            zIndex: 0,
           }}
         />
 
@@ -160,19 +78,6 @@ export default function RootLayout({
             <SignedIn>{children}</SignedIn>
           </main>
         </ClerkProvider>
-
-        {/* ── Keyframe animations ───────────────────────── */}
-        <style>{`
-          @keyframes drift1 {
-            0%, 100% { transform: translate(0, 0); }
-            40%       { transform: translate(14px, -22px); }
-            70%       { transform: translate(-8px, 10px); }
-          }
-          @keyframes drift2 {
-            0%, 100% { transform: translate(0, 0); }
-            50%       { transform: translate(-20px, -18px); }
-          }
-        `}</style>
       </body>
     </html>
   );
