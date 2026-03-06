@@ -3,8 +3,6 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider, SignedIn, SignedOut, SignUp } from "@clerk/nextjs";
 import ClientEffects from "./componenets/ClientEffects";
-import { ThemeProvider } from "./componenets/ThemeContext";
-import ThemeToggle from "./componenets/ThemeToggle";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -23,16 +21,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
         className={`${outfit.variable} antialiased`}
         style={{
-          background: "var(--app-bg, #050505)",
+          background: "#000",
           margin: 0,
           padding: 0,
           overflow: "hidden",
           cursor: "none",
-          transition: "background 0.4s",
         }}
       >
         {/* ── Ambient orbs ─────────────────────────────── */}
@@ -136,28 +133,26 @@ export default function RootLayout({
         <ClientEffects />
 
         {/* ── Page ─────────────────────────────────────── */}
-        <ThemeProvider>
-          <ThemeToggle />
-          <ClerkProvider>
-            <main
-              style={{
-                display: "flex",
-                minHeight: "100vh",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "var(--font-outfit), apple-system, sans-serif",
-                position: "relative",
-                zIndex: 10,
-                overflow: "hidden",
-              }}
-            >
-              <SignedOut>
-                <SignUp />
-              </SignedOut>
-              <SignedIn>{children}</SignedIn>
-            </main>
-          </ClerkProvider>
-        </ThemeProvider>
+        <ClerkProvider>
+          <main
+            style={{
+              display: "flex",
+              minHeight: "100vh",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#050505",
+              fontFamily: "var(--font-outfit), apple-system, sans-serif",
+              position: "relative",
+              zIndex: 10,
+              overflow: "hidden",
+            }}
+          >
+            <SignedOut>
+              <SignUp />
+            </SignedOut>
+            <SignedIn>{children}</SignedIn>
+          </main>
+        </ClerkProvider>
 
         {/* ── Keyframe animations ───────────────────────── */}
         <style>{`

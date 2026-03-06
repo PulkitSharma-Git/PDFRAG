@@ -12,20 +12,15 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* ── App theme tokens driven by data-theme on <html> ── */
-[data-theme="dark"] {
-  --app-bg: #050505;
-  --app-fg: #ededed;
-}
-
-[data-theme="light"] {
-  --app-bg: #f4f4f6;
-  --app-fg: #111111;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
 }
 
 body {
-  background: var(--app-bg, #050505);
-  color: var(--app-fg, #ededed);
+  background: var(--background);
+  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  transition: background 0.4s, color 0.4s;
 }
