@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider, SignedIn, SignedOut, SignUp } from "@clerk/nextjs";
 import ClientEffects from "./componenets/ClientEffects";
@@ -8,6 +8,13 @@ const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
+});
+
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -23,9 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${outfit.variable} antialiased`}
+        className={`${outfit.variable} ${cormorant.variable} antialiased`}
         style={{
-          background: "#000",
+          background: "#0d0800",
           margin: 0,
           padding: 0,
           overflow: "hidden",
@@ -34,7 +41,7 @@ export default function RootLayout({
       >
         {/* ── Ambient orbs ─────────────────────────────── */}
 
-        {/* Orb 1 — purple, top-left */}
+        {/* Orb 1 — amber, top-left */}
         <div
           style={{
             position: "fixed",
@@ -44,7 +51,7 @@ export default function RootLayout({
             top: "5%",
             left: "5%",
             background:
-              "radial-gradient(circle, rgba(110,70,240,0.09), transparent 70%)",
+              "radial-gradient(circle, rgba(255,120,30,0.11), transparent 70%)",
             filter: "blur(70px)",
             pointerEvents: "none",
             zIndex: 0,
@@ -52,7 +59,7 @@ export default function RootLayout({
           }}
         />
 
-        {/* Orb 2 — white, bottom-right */}
+        {/* Orb 2 — gold, bottom-right */}
         <div
           style={{
             position: "fixed",
@@ -62,7 +69,7 @@ export default function RootLayout({
             bottom: "10%",
             right: "10%",
             background:
-              "radial-gradient(circle, rgba(255,255,255,0.04), transparent 70%)",
+              "radial-gradient(circle, rgba(255,190,60,0.07), transparent 70%)",
             filter: "blur(70px)",
             pointerEvents: "none",
             zIndex: 0,
@@ -70,7 +77,7 @@ export default function RootLayout({
           }}
         />
 
-        {/* Orb 3 — blue, bottom-left */}
+        {/* Orb 3 — deep orange, bottom-left */}
         <div
           style={{
             position: "fixed",
@@ -80,7 +87,7 @@ export default function RootLayout({
             bottom: "25%",
             left: "8%",
             background:
-              "radial-gradient(circle, rgba(60,140,255,0.07), transparent 70%)",
+              "radial-gradient(circle, rgba(220,80,0,0.08), transparent 70%)",
             filter: "blur(70px)",
             pointerEvents: "none",
             zIndex: 0,
@@ -97,7 +104,7 @@ export default function RootLayout({
             top: "28%",
             height: 1,
             background:
-              "linear-gradient(90deg, transparent, rgba(255,255,255,0.045) 20%, rgba(255,255,255,0.045) 80%, transparent)",
+              "linear-gradient(90deg, transparent, rgba(255,160,40,0.05) 20%, rgba(255,160,40,0.05) 80%, transparent)",
             pointerEvents: "none",
             zIndex: 1,
           }}
@@ -110,7 +117,7 @@ export default function RootLayout({
             bottom: "28%",
             height: 1,
             background:
-              "linear-gradient(90deg, transparent, rgba(255,255,255,0.045) 20%, rgba(255,255,255,0.045) 80%, transparent)",
+              "linear-gradient(90deg, transparent, rgba(255,160,40,0.05) 20%, rgba(255,160,40,0.05) 80%, transparent)",
             pointerEvents: "none",
             zIndex: 1,
           }}
@@ -140,7 +147,7 @@ export default function RootLayout({
               minHeight: "100vh",
               alignItems: "center",
               justifyContent: "center",
-              background: "#050505",
+              background: "transparent",
               fontFamily: "var(--font-outfit), apple-system, sans-serif",
               position: "relative",
               zIndex: 10,
