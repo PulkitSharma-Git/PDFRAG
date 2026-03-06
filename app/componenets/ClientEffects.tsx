@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ClientEffects() {
   const [mouse, setMouse] = useState({ x: -999, y: -999 });
