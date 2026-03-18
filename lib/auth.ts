@@ -12,6 +12,6 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   pages: {
-    // Custom pages could be provided, but we are handling it in layout.tsx natively
+    // Custom pages could be provided, but handling it in layout.tsx natively
   }
 };
