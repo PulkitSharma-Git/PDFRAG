@@ -22,7 +22,7 @@ const FileUploadComponent: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       const formData = new FormData();
       formData.append("pdf", file);
       const res = await fetch(
-        process.env.NEXT_PUBLIC_SERVER_URL + "/upload/pdf" || "http://localhost:8000/upload/pdf",
+        (process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:8000") + "/upload/pdf",
         { method: "POST", body: formData }
       );
       if (!res.ok) throw new Error("Upload failed");
